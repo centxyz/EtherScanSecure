@@ -26,7 +26,7 @@ EtherScanSecure is built to be simple and practical, focusing on doing one thing
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/harutosati/EtherScanSecure.git`
+1. Clone the repository: `git clone https://github.com/centxyz/EtherScanSecure.git`
 2. `cd EtherScanSecure`
 3. Install in editable mode: `pip install -e .`
 
@@ -43,4 +43,4 @@ Pull requests and issue reports are both welcome. Please read the existing code 
 
 ## License
 
-Released under the MIT License — see the [LICENSE](https://github.com/harutosati/EtherScanSecure/blob/main/LICENSE) file.
+Released under the MIT License — see the [LICENSE](https://github.com/centxyz/EtherScanSecure/blob/main/LICENSE) file.
