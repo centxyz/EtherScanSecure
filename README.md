@@ -48,3 +48,9 @@ npm test
 ## License
 
 MIT © cent
+
+## Current limitations
+
+- Findings are heuristics and cannot prove that a transaction or contract is safe.
+- RPC responses and proxy-slot inspection depend on the configured node and supported contract patterns.
+- The service does not simulate every execution path, sign transactions, or replace an audit.
