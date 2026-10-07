@@ -1,16 +1,16 @@
-# EtherScanSecure
+# TxPreflight
 
-[![CI](https://github.com/centxyz/EtherScanSecure/actions/workflows/ci.yml/badge.svg)](https://github.com/centxyz/EtherScanSecure/actions/workflows/ci.yml)
+[![CI](https://github.com/centxyz/TxPreflight/actions/workflows/ci.yml/badge.svg)](https://github.com/centxyz/TxPreflight/actions/workflows/ci.yml)
 
-EtherScanSecure is a pre-signing Ethereum safety scanner API. It decodes common ERC-20, ERC-721, and permit calls, highlights risky approvals and value-bearing contract calls, and inspects addresses through configured EVM RPC endpoints for bytecode, balance, nonce, and EIP-1967 upgradeability slots.
+TxPreflight is a pre-signing Ethereum safety scanner API. It decodes common ERC-20, ERC-721, and permit calls, highlights risky approvals and value-bearing contract calls, and inspects addresses through configured EVM RPC endpoints for bytecode, balance, nonce, and EIP-1967 upgradeability slots.
 
 It is independent of Etherscan, does not require an explorer API key, and never signs or broadcasts transactions.
 
 ## Configure and run
 
 ```bash
-git clone https://github.com/centxyz/EtherScanSecure.git
-cd EtherScanSecure
+git clone https://github.com/centxyz/TxPreflight.git
+cd TxPreflight
 npm install
 
 export RPC_URLS='{"ethereum":"https://your-ethereum-rpc.example"}'
