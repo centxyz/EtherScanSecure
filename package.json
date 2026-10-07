@@ -1,30 +1,7 @@
 {
-  "name": "etherscansecure",
-  "version": "1.0.0",
-  "description": "EtherScanSecure HTTP starter service with health, data, and JSON transformation endpoints",
-  "main": "src/server.js",
-  "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "jest",
-    "test:watch": "jest --watch"
-  },
-  "keywords": [
-    "nodejs",
-    "express",
-    "api",
-    "etherscansecure"
-  ],
-  "author": "cent",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.1",
-    "supertest": "^6.3.3"
-  }
+  "name":"etherscansecure","version":"2.0.0","description":"Pre-signing Ethereum transaction and address safety scanner API","main":"src/server.js",
+  "scripts":{"start":"node src/server.js","test":"node --test tests/*.test.js"},
+  "keywords":["ethereum","security","transaction-decoder","approval-scanner","eip-1967"],"author":"cent","license":"MIT",
+  "dependencies":{"cors":"^2.8.5","ethers":"^6.15.0","express":"^4.21.2","morgan":"^1.10.0"},
+  "devDependencies":{"supertest":"^7.1.4"}
 }

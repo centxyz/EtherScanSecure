@@ -1,67 +1,15 @@
-// src/server.js
-/**
- * Express server for EtherScanSecure
- */
-
-const express = require('express');
-const { EtherScanSecureService } = require('./services/etherscansecure-service');
-const morgan = require('morgan');
-const cors = require('cors');
-
+const express = require('express'); const cors = require('cors'); const morgan = require('morgan'); const { EtherScanSecureService, ScanError } = require('./services/etherscansecure-service');
+function parseRpcUrls(value) { if (!value) return {}; let parsed; try { parsed = JSON.parse(value); } catch { throw new Error('RPC_URLS must be valid JSON'); } for (const url of Object.values(parsed)) if (typeof url !== 'string' || !/^https?:\/\//.test(url)) throw new Error('RPC_URLS values must be HTTP(S) URLs'); return parsed; }
 class Server {
-    constructor(port = 3000) {
-        this.port = port;
-        this.app = express();
-        this.service = new EtherScanSecureService();
-        this.setupMiddleware();
-        this.setupRoutes();
-    }
-
-    setupMiddleware() {
-        this.app.use(cors());
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(morgan('dev'));
-    }
-
-    setupRoutes() {
-        this.app.get('/health', (req, res) => {
-            res.json({ status: 'healthy', service: 'EtherScanSecure' });
-        });
-
-        this.app.get('/api/data', async (req, res) => {
-            try {
-                const data = await this.service.getData();
-                res.json({ success: true, data });
-            } catch (error) {
-                res.status(500).json({ success: false, error: error.message });
-            }
-        });
-
-        this.app.post('/api/process', async (req, res) => {
-            try {
-                const result = await this.service.process(req.body);
-                res.json({ success: true, result });
-            } catch (error) {
-                res.status(500).json({ success: false, error: error.message });
-            }
-        });
-
-        this.app.use((req, res) => {
-            res.status(404).json({ error: 'Route not found' });
-        });
-    }
-
-    start() {
-        this.app.listen(this.port, () => {
-            console.log(`🚀 EtherScanSecure server running on port ${this.port}`);
-        });
-    }
+  constructor({ port = 3000, service, corsOrigin = false } = {}) { this.port = Number(port); this.service = service || new EtherScanSecureService({ rpcUrls: parseRpcUrls(process.env.RPC_URLS) }); this.app = express(); this.app.disable('x-powered-by'); this.app.use(cors({ origin: corsOrigin || false })); this.app.use(express.json({ limit: '32kb' })); this.app.use(morgan('combined')); this.routes(); }
+  routes() {
+    this.app.get('/health', (_req, res) => res.json({ status: 'healthy', service: 'EtherScanSecure', chains: this.service.listChains() }));
+    this.app.post('/api/v1/scan/transaction', (req, res, next) => { try { res.json(this.service.scanTransaction(req.body)); } catch (error) { next(error); } });
+    this.app.get('/api/v1/scan/address/:chain/:address', async (req, res, next) => { try { res.json(await this.service.scanAddress(req.params.chain, req.params.address)); } catch (error) { next(error); } });
+    this.app.use((_req, res) => res.status(404).json({ error: 'Route not found', code: 'NOT_FOUND' }));
+    this.app.use((error, _req, res, _next) => res.status(error instanceof ScanError ? error.status : 500).json({ error: error.message, code: error.code || 'INTERNAL' }));
+  }
+  start() { this.httpServer = this.app.listen(this.port, () => console.log(`EtherScanSecure listening on ${this.port}`)); return this.httpServer; }
 }
-
-if (require.main === module) {
-    const server = new Server(process.env.PORT || 3000);
-    server.start();
-}
-
-module.exports = { Server };
+if (require.main === module) new Server({ port: process.env.PORT || 3000, corsOrigin: process.env.CORS_ORIGIN || false }).start();
+module.exports = { Server, parseRpcUrls };
