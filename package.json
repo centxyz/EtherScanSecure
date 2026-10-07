@@ -1,7 +1,7 @@
 {
   "name": "etherscansecure",
   "version": "1.0.0",
-  "description": "EtherScanSecure - Node.js REST API",
+  "description": "EtherScanSecure HTTP starter service with health, data, and JSON transformation endpoints",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

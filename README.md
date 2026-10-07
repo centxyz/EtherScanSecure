@@ -1,46 +1,30 @@
-<!-- fallback_EtherScanSecure_20260901084317_87167 -->
-
 # EtherScanSecure
 
-EtherScanSecure utilizes a decentralized network architecture, processing real-time blockchain nodes and smart contract integration through a trusted agent.
+EtherScanSecure is a small Express HTTP starter service. It provides a health check, returns an in-memory empty data collection, and transforms posted JSON by adding processing metadata. It does not implement a blockchain, message queue, distributed network, or persistent database.
 
-EtherScanSecure is built to be simple and practical, focusing on doing one thing well.
+## Install and run
 
-**Why EtherScanSecure?**
+```bash
+git clone https://github.com/centxyz/EtherScanSecure.git
+cd EtherScanSecure
+npm install
+npm start
+```
 
-- EtherScanSecure utilizes a decentralized network
-- architecture, processing real-time blockchain nodes
-- and smart contract integration through
+The default port is `3000`; set `PORT` to override it.
 
-## Key Features
+## Endpoints
 
-- EtherScanSecure utilizes a decentralized network
-- architecture, processing real-time blockchain nodes
-- and smart contract integration through
+- `GET /health` — service health
+- `GET /api/data` — current in-memory data response
+- `POST /api/process` — echoes and marks a JSON object as processed
 
-## Technology Stack
+## Test
 
-- javascript
-- Modular architecture
-- CI-ready (GitHub Actions)
-
-## Installation
-
-1. Clone the repository: `git clone https://github.com/centxyz/EtherScanSecure.git`
-2. `cd EtherScanSecure`
-3. Install in editable mode: `pip install -e .`
-
-## Configuration
-
-To configure EtherScanSecure, modify the settings in the configuration file. Options include:
-- **DEBUG**: Enable or disable debug mode.
-- **ALLOWED_HOSTS**: Set allowed hostnames.
-- **DATABASES**: Configure database settings.
-
-## Contributing
-
-Pull requests and issue reports are both welcome. Please read the existing code style before submitting.
+```bash
+npm test
+```
 
 ## License
 
-Released under the MIT License — see the [LICENSE](https://github.com/centxyz/EtherScanSecure/blob/main/LICENSE) file.
+MIT
